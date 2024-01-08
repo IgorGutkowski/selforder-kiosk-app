@@ -1,0 +1,103 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 100vh;
+  background-color: #fff;
+  color: #000;
+}
+
+.welcome-message {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.carousel-container img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.start-order-button {
+  padding: 20px 40px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  background-color: #ffcc00;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.start-order-button:hover {
+  background-color: #e6b800;
+}
+
+.carousel-image {
+  max-height: 60vh;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .welcome-message {
+    font-size: 1.5rem;
+  }
+
+  .start-order-button {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+  }
+
+  .carousel-image {
+    max-height: 30vh;
+  }
+}
+
+.order-type-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #fff;
+}
+
+.order-type-container h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.order-type-container button {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  margin: 0.5rem;
+  background-color: #ffcc00;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.order-type-container button:hover {
+  background-color: #e6b800;
+}
+
+.order-type-container button.cancel-order-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #f44336;
+  color: white;
+  margin-top: 1rem;
+}
+
+
+.order-type-container button.cancel-order-button:hover {
+  background-color: #d32f2f;
+}

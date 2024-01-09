@@ -6,6 +6,7 @@ const OrderTypeSelection = () => {
 
     const handleOrderType = (type) => {
         console.log(type);
+        navigate('/menu');
     };
 
     const handleCancelOrder = () => {
@@ -14,10 +15,10 @@ const OrderTypeSelection = () => {
 
     return (
         <div className="order-type-container">
-            <h2>Please select your order type:</h2>
-            <button onClick={() => handleOrderType('dineIn')}>Zamów na miejscu</button>
-            <button onClick={() => handleOrderType('takeAway')}>Zamów na wynos</button>
-            <button onClick={handleCancelOrder} className="cancel-order-button">Cancel Order</button>
+            <h2>Proszę wybrać typ zamówienia:</h2>
+            <button onClick={() => handleOrderType('dineIn')} className="order-type-button">Zamów na miejscu</button>
+            <button onClick={() => handleOrderType('takeAway')} className="order-type-button">Zamów na wynos</button>
+            <button onClick={handleCancelOrder} className="cancel-order-button">Anuluj zamówienie</button>
         </div>
     );
 };

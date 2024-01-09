@@ -75,7 +75,8 @@ body {
   margin-bottom: 2rem;
 }
 
-.order-type-container button {
+.order-type-button {
+  width: 300px;
   padding: 1rem 2rem;
   font-size: 1.5rem;
   margin: 0.5rem;
@@ -85,19 +86,87 @@ body {
   cursor: pointer;
 }
 
-.order-type-container button:hover {
+.order-type-button:hover {
   background-color: #e6b800;
 }
 
-.order-type-container button.cancel-order-button {
+.cancel-order-button {
+  width: auto;
   padding: 0.5rem 1rem;
   font-size: 1rem;
+  margin: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
   background-color: #f44336;
   color: white;
-  margin-top: 1rem;
 }
 
 
-.order-type-container button.cancel-order-button:hover {
+.cancel-button:hover {
   background-color: #d32f2f;
 }
+
+
+.menu-container {
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+}
+
+.category-nav {
+  flex-basis: 20%;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.category-nav button {
+  padding: 10px;
+  width: 200px;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  background-color: #ffcc00;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.category-nav button:hover {
+  background-color: #e6b800;
+}
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.product {
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.product img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+
+
+

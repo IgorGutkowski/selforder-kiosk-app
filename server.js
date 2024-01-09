@@ -1,9 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
-const Product = require('./models/Product'); // Załóżmy, że to jest Twój model produktu
+const Product = require('./models/Product');
+const Category = require('./models/Category');
 const app = express();
 
 app.use(express.json());
+app.use(cors())
 
 mongoose.connect('mongodb://localhost:27017/kioskDB', {
     useNewUrlParser: true,
@@ -21,6 +24,15 @@ app.get('/api/products', async (req, res) => {
         res.json(products);
     } catch (error) {
         res.status(500).json({ message: "Błąd podczas pobierania produktów", error: error });
+    }
+});
+
+app.get('/api/categories', async (req, res) => {
+    try {
+        const categories = await Category.find({});
+        res.json(categories);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching categories", error });
     }
 });
 
@@ -45,7 +57,7 @@ app.get('/api/products/search/:searchQuery', async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Serwer działa na porcie ${PORT}`);
 });

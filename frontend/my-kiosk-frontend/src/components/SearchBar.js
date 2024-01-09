@@ -13,6 +13,7 @@ const SearchBar = ({ onSearchResult }) => {
             .catch(error => {
                 console.error('Error fetching search results:', error);
             });
+        setSearchTerm('');
     };
 
     return (

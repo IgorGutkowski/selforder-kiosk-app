@@ -5,8 +5,7 @@ const OrderTypeSelection = () => {
     const navigate = useNavigate();
 
     const handleOrderType = (type) => {
-        console.log(type);
-        navigate('/menu');
+        navigate('/menu', { state: { orderType: type } });
     };
 
     const handleCancelOrder = () => {

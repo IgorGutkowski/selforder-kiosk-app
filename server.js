@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const Product = require('./models/Product');
 const Category = require('./models/Category');
+const Order = require('./models/Order');
 const app = express();
 
 app.use(express.json());
@@ -56,6 +57,26 @@ app.get('/api/products/search/:searchQuery', async (req, res) => {
         res.status(500).json({ message: "Błąd podczas wyszukiwania produktów", error: error });
     }
 });
+
+app.post('/api/orders', async (req, res) => {
+    try {
+        const newOrder = new Order({
+            number: req.body.number,
+            date: req.body.date,
+            products: req.body.products.map(product => ({ product: product._id })),
+            remarks: req.body.remarks,
+            price: req.body.price,
+            takeAway: req.body.takeAway
+        });
+
+        await newOrder.save();
+        res.status(201).json(newOrder);
+    } catch (error) {
+        res.status(500).json({ message: "Error submitting the order", error });
+    }
+});
+
+
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

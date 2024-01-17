@@ -35,7 +35,7 @@ const Order = ({ order, setOrder, removeFromOrder }) => {
                         <button onClick={() => removeFromOrder(index)}>X</button>
                     </li>
                 ))}
-                {order.takeAway && <p>Type: TakeAway (includes paper bag fee)</p>}
+                {order.takeAway && <p>Typ zamówienia: Na wynos (Dodatkowa opłata za papierową torbę)</p>}
             </ul>
             <label htmlFor="order-remarks">Uwagi do zamówienia:</label>
             <textarea

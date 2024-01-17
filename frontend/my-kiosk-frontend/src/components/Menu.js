@@ -11,6 +11,10 @@ const Menu = () => {
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [categories, setCategories] = useState([]);
+    const [loadingProducts, setLoadingProducts] = useState(true);
+    const [loadingCategories, setLoadingCategories] = useState(true);
+    const [errorProducts, setErrorProducts] = useState(null);
+    const [errorCategories, setErrorCategories] = useState(null);
     const [order, setOrder] = useState({
         number: Date.now().toString(), // Convert timestamp to string for the order number
         date: new Date(),
@@ -26,17 +30,23 @@ const Menu = () => {
         axios.get('http://localhost:3001/api/products')
             .then(response => {
                 setProducts(response.data);
+                setLoadingProducts(false);
             })
             .catch(error => {
                 console.error('Error fetching products:', error);
+                setErrorProducts('Failed to load products.');
+                setLoadingProducts(false);
             });
 
         axios.get('http://localhost:3001/api/categories')
             .then(response => {
                 setCategories(response.data);
+                setLoadingCategories(false);
             })
             .catch(error => {
                 console.error('Error fetching categories:', error);
+                setErrorCategories('Failed to load categories.');
+                setLoadingCategories(false);
             });
     }, []);
 
@@ -120,15 +130,27 @@ const Menu = () => {
                 <button onClick={handleCancelOrder} className="cancel-order-button">Anuluj zamówienie</button>
             </div>
             <div className="menu-container">
-                <CategoryNavBar categories={categories} onSelectCategory={handleCategoryClick} />
+                {loadingCategories ? (
+                    <p>Loading categories...</p>
+                ) : errorCategories ? (
+                    <p>{errorCategories}</p>
+                ) : (
+                    <CategoryNavBar categories={categories} onSelectCategory={handleCategoryClick} />
+                )}
                 <div className="menu">
-                    {products.map(product => (
-                        <div key={product._id} className="product" onClick={() => handleProductClick(product)}>
-                            <img src={product.image} alt={product.name} />
-                            <h3>{product.name}</h3>
-                            <p>Cena: {product.price} zł</p>
-                        </div>
-                    ))}
+                    {loadingProducts ? (
+                        <p>Loading products...</p>
+                    ) : errorProducts ? (
+                        <p>{errorProducts}</p>
+                    ) : (
+                        products.map(product => (
+                            <div key={product._id} className="product" onClick={() => handleProductClick(product)}>
+                                <img src={product.image} alt={product.name} />
+                                <h3>{product.name}</h3>
+                                <p>Cena: {product.price} zł</p>
+                            </div>
+                        ))
+                    )}
                 </div>
                 {selectedProduct && <ProductDetail product={selectedProduct} addToOrder={addToOrder} />}
                 <Order order={order} removeFromOrder={removeFromOrder} onConfirm={onConfirm} setOrder={setOrder}/>

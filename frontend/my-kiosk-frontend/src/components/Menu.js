@@ -108,10 +108,10 @@ const Menu = () => {
         });
     };
 
-    const onConfirm = () => {
-        // Navigate to payment or submit order logic here
-        console.log('Order confirmed:', order);
-    };
+    // const onConfirm = () => {
+    //     // Navigate to payment or submit order logic here
+    //     console.log('Order confirmed:', order);
+    // };
 
     const removeFromOrder = (index) => {
         setOrder(prevOrder => {
@@ -153,7 +153,7 @@ const Menu = () => {
                     )}
                 </div>
                 {selectedProduct && <ProductDetail product={selectedProduct} addToOrder={addToOrder} />}
-                <Order order={order} removeFromOrder={removeFromOrder} onConfirm={onConfirm} setOrder={setOrder}/>
+                <Order order={order} removeFromOrder={removeFromOrder} setOrder={setOrder}/>
             </div>
         </>
     );

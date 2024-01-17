@@ -1,30 +1,32 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const Product = require('./models/Product');
 const Category = require('./models/Category');
 const Order = require('./models/Order');
+const adminAuth = require('./middleware/adminAuth'); // Make sure to create this middleware
 const app = express();
 
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 
-mongoose.connect('mongodb://localhost:27017/kioskDB', {
+mongoose.connect(process.env.MONGODB_URI, { // Make sure MONGODB_URI is in your .env file
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
-    console.log('Połączono z MongoDB');
+    console.log('Connected to MongoDB');
 }).catch(err => {
-    console.error('Nie udało się połączyć z MongoDB', err);
+    console.error('Failed to connect to MongoDB', err);
 });
 
-// Endpoint do pobierania wszystkich produktów
+// Public endpoints
 app.get('/api/products', async (req, res) => {
     try {
         const products = await Product.find({});
         res.json(products);
     } catch (error) {
-        res.status(500).json({ message: "Błąd podczas pobierania produktów", error: error });
+        res.status(500).json({ message: "Error fetching products", error });
     }
 });
 
@@ -37,24 +39,22 @@ app.get('/api/categories', async (req, res) => {
     }
 });
 
-// Endpoint do pobierania produktów według kategorii
 app.get('/api/products/category/:categoryName', async (req, res) => {
     try {
         const products = await Product.find({ category: req.params.categoryName });
         res.json(products);
     } catch (error) {
-        res.status(500).json({ message: "Błąd podczas pobierania produktów kategorii", error: error });
+        res.status(500).json({ message: "Error fetching products by category", error });
     }
 });
 
-// Endpoint do wyszukiwania produktów po nazwie
 app.get('/api/products/search/:searchQuery', async (req, res) => {
     try {
-        const searchRegex = new RegExp(req.params.searchQuery, 'i'); // 'i' dla case-insensitive
+        const searchRegex = new RegExp(req.params.searchQuery, 'i');
         const products = await Product.find({ name: searchRegex });
         res.json(products);
     } catch (error) {
-        res.status(500).json({ message: "Błąd podczas wyszukiwania produktów", error: error });
+        res.status(500).json({ message: "Error searching products", error });
     }
 });
 
@@ -76,9 +76,118 @@ app.post('/api/orders', async (req, res) => {
     }
 });
 
+// Admin routes
+app.post('/api/admin/products', adminAuth, async (req, res) => {
+    try {
+        const newProduct = new Product(req.body);
+        await newProduct.save();
+        res.status(201).json(newProduct);
+    } catch (error) {
+        res.status(500).json({ message: "Error creating product", error });
+    }
+});
+
+// Update an existing product
+app.put('/api/admin/products/:id', adminAuth, async (req, res) => {
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json(updatedProduct);
+    } catch (error) {
+        res.status(500).json({ message: "Error updating product", error });
+    }
+});
+
+// Delete a product
+app.delete('/api/admin/products/:id', adminAuth, async (req, res) => {
+    try {
+        await Product.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: "Product deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting product", error });
+    }
+});
+
+// Create a new category
+app.post('/api/admin/categories', adminAuth, async (req, res) => {
+    try {
+        const newCategory = new Category(req.body);
+        await newCategory.save();
+        res.status(201).json(newCategory);
+    } catch (error) {
+        res.status(500).json({ message: "Error creating category", error });
+    }
+});
+
+// Update an existing category
+app.put('/api/admin/categories/:id', adminAuth, async (req, res) => {
+    try {
+        const updatedCategory = await Category.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json(updatedCategory);
+    } catch (error) {
+        res.status(500).json({ message: "Error updating category", error });
+    }
+});
+
+// Delete a category
+app.delete('/api/admin/categories/:id', adminAuth, async (req, res) => {
+    try {
+        await Category.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: "Category deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting category", error });
+    }
+});
+
+
+//stats
+app.get('/api/admin/statistics/orders', adminAuth, async (req, res) => {
+    const { startDate, endDate } = req.query;
+    try {
+        const orders = await Order.aggregate([
+            {
+                $match: {
+                    date: {
+                        $gte: new Date(startDate),
+                        $lte: new Date(endDate)
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    takeAwayCount: { $sum: { $cond: [{ $eq: ['$takeAway', true] }, 1, 0] } },
+                    dineInCount: { $sum: { $cond: [{ $eq: ['$takeAway', false] }, 1, 0] } },
+                    totalTakeAwayPrice: { $sum: { $cond: [{ $eq: ['$takeAway', true] }, '$price', 0] } },
+                    totalDineInPrice: { $sum: { $cond: [{ $eq: ['$takeAway', false] }, '$price', 0] } },
+                    totalPrice: { $sum: '$price' }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    takeAwayCount: 1,
+                    dineInCount: 1,
+                    totalTakeAwayPrice: 1,
+                    totalDineInPrice: 1,
+                    totalPrice: 1
+                }
+            }
+        ]);
+
+        if (orders.length > 0) {
+            res.json(orders[0]);
+        } else {
+            res.status(404).json({ message: "No orders found for the given date range" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching order statistics", error });
+    }
+});
+
+
 
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-    console.log(`Serwer działa na porcie ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });

@@ -1,0 +1,2 @@
+GET http://localhost:3001/api/admin/statistics/orders?startDate=2024-01-17T00:00:00.000Z&endDate=2024-01-17T23:59:59.999Z
+Admin-Secret-Key: admin

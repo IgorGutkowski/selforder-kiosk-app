@@ -41,12 +41,23 @@ app.get('/api/categories', async (req, res) => {
 
 app.get('/api/products/category/:categoryName', async (req, res) => {
     try {
-        const products = await Product.find({ category: req.params.categoryName });
+        const providedCategoryName = req.params.categoryName;
+        const regexCategoryName = new RegExp(providedCategoryName, 'i'); // Create a case-insensitive regex
+
+        // Query the database using the regex for case-insensitive search
+        const products = await Product.find({ category: regexCategoryName });
+
+        if (products.length === 0) {
+            throw new Error('Category not found in the database');
+        }
+
         res.json(products);
     } catch (error) {
         res.status(500).json({ message: "Error fetching products by category", error });
     }
 });
+
+
 
 app.get('/api/products/search/:searchQuery', async (req, res) => {
     try {

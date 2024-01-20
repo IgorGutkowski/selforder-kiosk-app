@@ -19,13 +19,12 @@ const productSchema = new mongoose.Schema({
         min: [0, 'Product price must be a positive number']
     },
     category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
+        type: String, // Change the type to String
         required: [true, 'Product category is required'],
         validate: {
-            validator: async function(categoryId) {
-                const category = await Category.findById(categoryId);
-                return !!category; // returns true if category exists, otherwise false
+            validator: async function(categoryName) {
+                const category = await Category.findOne({ name: categoryName });
+                return !!category; // Returns true if category exists, otherwise false
             },
             message: 'Category not found in the database'
         }

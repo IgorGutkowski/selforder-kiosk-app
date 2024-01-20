@@ -6,7 +6,7 @@ Admin-Secret-Key: admin
 {
   "name": "Example Product",
   "price": 9.99,
-  "category": "659d70e1e4f19db26d00c041",
+  "category": "Wegetariańskie",
   "ingredients": ["Ingredient1", "Ingredient2"],
   "image": "http://example.com/image.jpg"
 }
@@ -14,7 +14,7 @@ Admin-Secret-Key: admin
 ###
 
 # Edit the product (Replace PRODUCT_ID with the actual ID of the created product)
-PUT http://localhost:3001/api/admin/products/65abc20a0d809d77aefce96d
+PUT http://localhost:3001/api/admin/products/65ac01ff2d9e604a12a04272
 Content-Type: application/json
 Admin-Secret-Key: admin
 
@@ -29,5 +29,5 @@ Admin-Secret-Key: admin
 ###
 
 # Delete the product (Replace PRODUCT_ID with the actual ID of the created product)
-DELETE http://localhost:3001/api/admin/products/65abc20a0d809d77aefce96d
+DELETE http://localhost:3001/api/admin/products/65ac01ff2d9e604a12a04272
 Admin-Secret-Key: admin

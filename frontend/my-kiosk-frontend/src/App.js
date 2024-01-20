@@ -8,6 +8,7 @@ import OrderConfirmationScreen from './components/OrderConfirmationScreen';
 import { AdminProvider } from './context/AdminContext';
 import AdminLogin from './components/AdminLogin';
 import AdminPanel from './components/AdminPanel';
+import Statistics from './components/Statistics';
 
 import './App.css';
 
@@ -24,6 +25,7 @@ const App = () => {
                     <Route path="/order-confirmation" element={<OrderConfirmationScreen />} />
                     <Route path="/admin" element={<AdminLogin />} />
                     <Route path="/admin-panel" element={<AdminPanel />} />
+                    <Route path="/statistics" element={<Statistics />} />
                 </Routes>
             </div>
         </Router>

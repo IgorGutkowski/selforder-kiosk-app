@@ -28,6 +28,7 @@ const AdminPanel = () => {
         <div className="admin-panel">
             <h1 className="admin-title">Admin Panel</h1>
             <button onClick={handleLogout} className="delete">Logout</button>
+            <button onClick={() => navigate('/statistics')}>Show Statistics</button>
             <CategoriesManager />
             <ProductsManager />
         </div>

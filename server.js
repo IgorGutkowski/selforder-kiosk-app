@@ -88,6 +88,21 @@ app.post('/api/orders', async (req, res) => {
 });
 
 // Admin routes
+
+
+app.post('/api/admin/login', (req, res) => {
+    const adminKey = req.header('Admin-Secret-Key');
+    console.log('Received Admin Key:', adminKey); // Debugging line
+
+    if (adminKey === process.env.ADMIN_SECRET_KEY) {
+        res.json({ message: "Admin authenticated successfully" });
+    } else {
+        res.status(401).json({ message: "Unauthorized access." });
+    }
+});
+
+
+
 app.post('/api/admin/products', adminAuth, async (req, res) => {
     try {
         const newProduct = new Product(req.body);

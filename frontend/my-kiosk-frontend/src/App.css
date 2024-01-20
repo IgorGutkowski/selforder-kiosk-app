@@ -361,3 +361,35 @@ body {
 .button-add-to-order:hover {
   background-color: #563a16;
 }
+
+.error-message {
+  color: #f44336;
+  margin: 10px 0;
+}
+
+.products-list {
+  margin-top: 20px;
+}
+
+.product-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.product-item p {
+  margin: 5px 0;
+}
+
+.product-item button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.product-item button:hover {
+  opacity: 0.8;
+}

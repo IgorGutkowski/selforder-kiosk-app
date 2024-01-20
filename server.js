@@ -83,29 +83,52 @@ app.post('/api/admin/products', adminAuth, async (req, res) => {
         await newProduct.save();
         res.status(201).json(newProduct);
     } catch (error) {
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({ message: "Validation Error", error: error.message });
+        }
         res.status(500).json({ message: "Error creating product", error });
     }
 });
 
+
 // Update an existing product
 app.put('/api/admin/products/:id', adminAuth, async (req, res) => {
     try {
-        const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updatedProduct = await Product.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
         res.json(updatedProduct);
     } catch (error) {
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({ message: "Validation Error", error: error.message });
+        }
         res.status(500).json({ message: "Error updating product", error });
     }
 });
 
+
 // Delete a product
 app.delete('/api/admin/products/:id', adminAuth, async (req, res) => {
     try {
-        await Product.findByIdAndDelete(req.params.id);
+        const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+
+        if (!deletedProduct) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
         res.status(200).json({ message: "Product deleted successfully" });
     } catch (error) {
         res.status(500).json({ message: "Error deleting product", error });
     }
 });
+
 
 // Create a new category
 app.post('/api/admin/categories', adminAuth, async (req, res) => {
@@ -121,22 +144,41 @@ app.post('/api/admin/categories', adminAuth, async (req, res) => {
 // Update an existing category
 app.put('/api/admin/categories/:id', adminAuth, async (req, res) => {
     try {
-        const updatedCategory = await Category.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updatedCategory = await Category.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true,
+                runValidators: true,
+                context: 'query' // This ensures validators are run
+            }
+        );
+
+        if (!updatedCategory) {
+            return res.status(404).json({ message: "Category not found" });
+        }
+
         res.json(updatedCategory);
     } catch (error) {
         res.status(500).json({ message: "Error updating category", error });
     }
 });
 
+
+
 // Delete a category
 app.delete('/api/admin/categories/:id', adminAuth, async (req, res) => {
     try {
-        await Category.findByIdAndDelete(req.params.id);
+        const deletedCategory = await Category.findByIdAndDelete(req.params.id);
+        if (!deletedCategory) {
+            return res.status(404).json({ message: "Category not found" });
+        }
         res.status(200).json({ message: "Category deleted successfully" });
     } catch (error) {
         res.status(500).json({ message: "Error deleting category", error });
     }
 });
+
 
 
 //stats

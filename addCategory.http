@@ -1,0 +1,25 @@
+# Add a new category
+POST http://localhost:3001/api/admin/categories
+Content-Type: application/json
+Admin-Secret-Key: admin
+
+{
+  "name": " "
+}
+
+###
+
+# Edit the category (Replace CATEGORY_ID with the actual ID of the created category)
+PUT http://localhost:3001/api/admin/categories/65abbc17d8aa4e4de55fe331
+Content-Type: application/json
+Admin-Secret-Key: admin
+
+{
+  "name": "   "
+}
+
+###
+
+# Delete the category (Replace CATEGORY_ID with the actual ID of the created category)
+DELETE http://localhost:3001/api/admin/categories/65abbc17d8aa4e4de55fe331
+Admin-Secret-Key: admin

@@ -1,0 +1,33 @@
+# Add a new product
+POST http://localhost:3001/api/admin/products
+Content-Type: application/json
+Admin-Secret-Key: admin
+
+{
+  "name": "Example Product",
+  "price": 9.99,
+  "category": "659d70e1e4f19db26d00c041",
+  "ingredients": ["Ingredient1", "Ingredient2"],
+  "image": "http://example.com/image.jpg"
+}
+
+###
+
+# Edit the product (Replace PRODUCT_ID with the actual ID of the created product)
+PUT http://localhost:3001/api/admin/products/65abc20a0d809d77aefce96d
+Content-Type: application/json
+Admin-Secret-Key: admin
+
+{
+  "name": "Updated Product Name",
+  "price": 11.99,
+  "category": "659d70e1e4f19db26d00c041",
+  "ingredients": ["UpdatedIngredient1", "UpdatedIngredient2"],
+  "image": "http://example.com/newimage.jpg"
+}
+
+###
+
+# Delete the product (Replace PRODUCT_ID with the actual ID of the created product)
+DELETE http://localhost:3001/api/admin/products/65abc20a0d809d77aefce96d
+Admin-Secret-Key: admin

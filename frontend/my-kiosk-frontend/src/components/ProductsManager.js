@@ -103,27 +103,35 @@ const ProductsManager = () => {
 
 
     return (
-        <div>
-            <h2>Manage Products</h2>
-            <ProductForm
-                onSubmit={addOrUpdateProduct}
-                initialData={editingProduct || {}}
-                categories={categories}
-            />
+        <div className="admin-container">
+            <h2 className="admin-title">Zarządzaj produktami</h2>
+            <ProductForm onSubmit={addOrUpdateProduct} initialData={editingProduct || {}} categories={categories} />
             {loading && <p>Loading products...</p>}
-            {error && <p>{error}</p>}
-            <div>
+            {error && <p className="error-message">{error}</p>}
+            <ul className="admin-list">
                 {products.map((product) => (
-                    <div key={product._id}>
-                        <p>Name: {product.name}</p>
-                        <p>Price: {product.price}</p>
-                        <p>Category: {product.category}</p>
-                        <button onClick={() => setEditingProduct(product)}>Edit</button>
-                        <button onClick={() => deleteProduct(product._id)}>Delete</button>
-                    </div>
+                    <li key={product._id} className="product-item">
+                        <div className="product-details">
+                            <h3>Nazwa: {product.name}</h3>
+                            <p>Cena: {product.price}</p>
+                            <p>Kategoria: {product.category}</p>
+                            <p>Image URL: {product.image || 'N/A'}</p>
+                            <text>Składniki:</text>
+                            <ul className="ingredients-list">
+                                {product.ingredients.map((ingredient, index) => (
+                                    <li key={index}>{ingredient}</li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div>
+                            <button className="edit" onClick={() => setEditingProduct(product)}>Edit</button>
+                            <button className="delete" onClick={() => deleteProduct(product._id)}>Delete</button>
+                        </div>
+                    </li>
                 ))}
-            </div>
+            </ul>
         </div>
+
     );
 
 };

@@ -33,18 +33,22 @@ const AdminLogin = () => {
     };
 
     return (
-        <div>
-            <h1>Admin Login</h1>
+        <div className="form-container admin-login">
+            <h1 className="admin-title">Admin Login</h1>
             <Formik
                 initialValues={{ adminKey: '' }}
                 onSubmit={handleAdminLogin}
             >
                 {({ isSubmitting }) => (
                     <Form>
-                        <Field type="password" name="adminKey" placeholder="Enter Admin Key" />
-                        <button type="submit" disabled={isSubmitting}>
-                            Login
-                        </button>
+                        <div className="form-field">
+                            <Field type="password" name="adminKey" placeholder="Enter Admin Key" className="form-input" />
+                        </div>
+                        <div className="form-field">
+                            <button type="submit" disabled={isSubmitting} className="edit">
+                                Login
+                            </button>
+                        </div>
                     </Form>
                 )}
             </Formik>

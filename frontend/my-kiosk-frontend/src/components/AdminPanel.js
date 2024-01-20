@@ -12,11 +12,12 @@ const AdminPanel = () => {
     }
 
     return (
-        <div>
-            <h1>Admin Dashboard</h1>
+        <div className="admin-panel">
+            <h1 className="admin-title">Admin Panel</h1>
             <CategoriesManager />
             <ProductsManager />
         </div>
+
     );
 };
 

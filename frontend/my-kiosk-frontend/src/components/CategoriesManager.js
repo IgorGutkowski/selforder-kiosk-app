@@ -69,21 +69,26 @@ const CategoriesManager = () => {
     };
 
     return (
-        <div>
-            <h2>Manage Categories</h2>
+        <div className="admin-container">
+            <h2 className="admin-title">Zarządzaj kategoriami</h2>
             <CategoryForm
                 onSubmit={addOrUpdateCategory}
                 initialData={editingCategory || {}}
-                resetAfterSubmit={!editingCategory}
+                setEditingCategory={setEditingCategory} // Pass the function to CategoryForm
             />
-            {categories.map((category) => (
-                <div key={category._id}>
-                    {category.name}
-                    <button onClick={() => setEditingCategory(category)}>Edit</button>
-                    <button onClick={() => deleteCategory(category._id)}>Delete</button>
-                </div>
-            ))}
+            <ul className="admin-list">
+                {categories.map((category) => (
+                    <li key={category._id} className="admin-list-item">
+                        {category.name}
+                        <div>
+                            <button className="edit" onClick={() => setEditingCategory(category)}>Edit</button>
+                            <button className="delete" onClick={() => deleteCategory(category._id)}>Delete</button>
+                        </div>
+                    </li>
+                ))}
+            </ul>
         </div>
+
     );
 };
 

@@ -13,24 +13,29 @@ import Statistics from './components/Statistics';
 import './App.css';
 
 const App = () => {
+    // App.jsx
     return (
         <AdminProvider>
-        <Router>
-            <div className="App app">
-                <Routes>
-                    <Route path="/" element={<WelcomeScreen />} />
-                    <Route path="/order-type" element={<OrderTypeSelection />} />
-                    <Route path="/menu" element={<Menu />} />
-                    <Route path="/payment" element={<PaymentScreen />} />
-                    <Route path="/order-confirmation" element={<OrderConfirmationScreen />} />
-                    <Route path="/admin" element={<AdminLogin />} />
-                    <Route path="/admin-panel" element={<AdminPanel />} />
-                    <Route path="/statistics" element={<Statistics />} />
-                </Routes>
-            </div>
-        </Router>
+            <Router>
+                <div className="flex justify-center items-center min-h-screen bg-gray-50">
+                    <div className="w-full max-w-screen-lg p-4 bg-white shadow-xl overflow-auto" style={{ height: '800px' }}>
+                        <Routes>
+                            <Route path="/" element={<WelcomeScreen />} />
+                            <Route path="/order-type" element={<OrderTypeSelection />} />
+                            <Route path="/menu" element={<Menu />} />
+                            <Route path="/payment" element={<PaymentScreen />} />
+                            <Route path="/order-confirmation" element={<OrderConfirmationScreen />} />
+                            <Route path="/admin" element={<AdminLogin />} />
+                            <Route path="/admin-panel" element={<AdminPanel />} />
+                            <Route path="/statistics" element={<Statistics />} />
+                        </Routes>
+                    </div>
+                </div>
+            </Router>
         </AdminProvider>
     );
+
+
 };
 
 export default App;

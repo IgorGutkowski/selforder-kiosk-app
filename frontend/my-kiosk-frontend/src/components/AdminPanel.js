@@ -7,15 +7,15 @@ import ProductsManager from "./ProductsManager";
 
 const AdminPanel = () => {
     const { state, dispatch } = useContext(AdminContext);
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         dispatch({ type: 'LOGOUT' });
-        navigate('/admin'); // Redirect to the login page
+        navigate('/admin');
     };
 
     if (!state.isAdminAuthenticated) {
-        // If not authenticated, redirect to the login page with a message
+
         return (
             <div>
                 <p>Access Denied. You are not authorized to view this page.</p>

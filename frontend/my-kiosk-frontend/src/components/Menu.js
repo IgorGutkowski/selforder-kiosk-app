@@ -108,10 +108,6 @@ const Menu = () => {
         });
     };
 
-    // const onConfirm = () => {
-    //     // Navigate to payment or submit order logic here
-    //     console.log('Order confirmed:', order);
-    // };
 
     const removeFromOrder = (index) => {
         setOrder(prevOrder => {
@@ -125,38 +121,45 @@ const Menu = () => {
 
     return (
         <>
-            <div className="menu-header">
+            <div className="flex justify-between items-center p-4 border-b border-gray-200">
                 <SearchBar onSearchResult={handleSearchResult} />
-                <button onClick={handleCancelOrder} className="cancel-order-button">Anuluj zamówienie</button>
+                <button onClick={handleCancelOrder} className="bg-red-500 text-white font-bold uppercase text-sm px-4 py-2 rounded shadow hover:bg-red-600 transition ease-in-out duration-300">Anuluj zamówienie</button>
             </div>
-            <div className="menu-container">
-                {loadingCategories ? (
-                    <p>Loading categories...</p>
-                ) : errorCategories ? (
-                    <p>{errorCategories}</p>
-                ) : (
-                    <CategoryNavBar categories={categories} onSelectCategory={handleCategoryClick} />
-                )}
-                <div className="menu">
+            <div className="flex p-4">
+                <div className="w-1/4 overflow-y-auto">
+                    {loadingCategories ? (
+                        <p>Loading categories...</p>
+                    ) : errorCategories ? (
+                        <p>{errorCategories}</p>
+                    ) : (
+                        <CategoryNavBar categories={categories} onSelectCategory={handleCategoryClick} />
+                    )}
+                </div>
+                <div className="w-2/4 overflow-y-auto">
                     {loadingProducts ? (
                         <p>Loading products...</p>
                     ) : errorProducts ? (
                         <p>{errorProducts}</p>
                     ) : (
                         products.map(product => (
-                            <div key={product._id} className="product" onClick={() => handleProductClick(product)}>
-                                <img src={product.image} alt={product.name} />
-                                <h3>{product.name}</h3>
-                                <p>Cena: {product.price} zł</p>
+                            <div key={product._id} className="border border-gray-200 rounded shadow-lg p-4 cursor-pointer" onClick={() => handleProductClick(product)}>
+                                <img src={product.image} alt={product.name} className="w-full h-40 object-scale-down rounded" />
+                                <h3 className="text-lg font-semibold mt-2">{product.name}</h3>
+                                <p className="text-gray-600">Cena: {product.price} zł</p>
                             </div>
                         ))
                     )}
                 </div>
-                {selectedProduct && <ProductDetail product={selectedProduct} addToOrder={addToOrder} />}
-                <Order order={order} removeFromOrder={removeFromOrder} setOrder={setOrder}/>
+
+                <div className="w-1/4 space-y-4">
+                    {selectedProduct && <ProductDetail product={selectedProduct} addToOrder={addToOrder} />}
+                    <Order order={order} removeFromOrder={removeFromOrder} setOrder={setOrder}/>
+                </div>
             </div>
         </>
+
     );
+
 };
 
 export default Menu;

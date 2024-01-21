@@ -32,19 +32,30 @@ const PaymentScreen = () => {
         navigate('/'); // Navigate to WelcomeScreen, simulating the cancellation of the order
     };
 
+    // PaymentContainer.jsx
+    // PaymentContainer.jsx
     return (
-        <div className="payment-container">
-            <h1>Payment</h1>
+        <div className="flex flex-col items-center justify-center  py-8 px-4">
+            <h1 className="text-3xl font-bold mb-4">Payment</h1>
             {isLoading ? (
-                <p>Processing your payment...</p>
+                <div className="flex justify-center items-center">
+                    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-yellow-500"></div>
+                </div>
             ) : (
                 <>
-                    {error && <p className="error-message">{error}</p>}
-                    <button onClick={handlePaymentConfirmation} disabled={isLoading}>
+                    {error && <p className="text-red-500 mb-4">{error}</p>}
+                    <button
+                        onClick={handlePaymentConfirmation}
+                        disabled={isLoading}
+                        className={`bg-green-500 text-white text-lg font-bold py-2 px-4 rounded shadow hover:bg-green-600 focus:outline-none focus:shadow-outline transition ease-in-out duration-300 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
                         Potwierdź płatność
                     </button>
                     {error && (
-                        <button onClick={handleCancelOrder} className="cancel-order-button">
+                        <button
+                            onClick={handleCancelOrder}
+                            className="mt-4 bg-red-500 text-white text-lg font-bold py-2 px-4 rounded shadow hover:bg-red-600 focus:outline-none focus:shadow-outline transition ease-in-out duration-300"
+                        >
                             Anuluj zamówienie
                         </button>
                     )}
@@ -52,6 +63,8 @@ const PaymentScreen = () => {
             )}
         </div>
     );
+
+
 };
 
 export default PaymentScreen;

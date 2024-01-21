@@ -23,9 +23,11 @@ const SearchBar = ({ onSearchResult }) => {
                 placeholder="Wyszukaj produkt..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                className="border rounded p-2"
             />
-            <button onClick={handleSearch}>Szukaj</button>
+            <button onClick={handleSearch} className="bg-amber-900 text-white font-bold uppercase ml-2 text-sm px-4 py-2 rounded shadow hover:bg-amber-950 transition ease-in-out duration-300">Szukaj</button>
         </div>
+
     );
 };
 

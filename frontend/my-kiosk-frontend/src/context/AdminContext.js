@@ -4,6 +4,7 @@ import React, { createContext, useReducer } from 'react';
 const initialState = {
     isAdminAuthenticated: false,
     adminData: null,
+    adminKey: null,
 };
 
 const adminReducer = (state, action) => {
@@ -13,12 +14,14 @@ const adminReducer = (state, action) => {
                 ...state,
                 isAdminAuthenticated: true,
                 adminData: action.payload,
+                adminKey: action.adminKey,
             };
         case 'LOGOUT':
             return {
                 ...state,
                 isAdminAuthenticated: false,
                 adminData: null,
+                adminKey: null,
             };
         default:
             return state;

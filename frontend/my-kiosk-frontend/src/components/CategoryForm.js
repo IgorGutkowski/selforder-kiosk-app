@@ -4,7 +4,7 @@ import { Formik, Form, Field } from 'formik';
 
 const CategoryForm = ({ onSubmit, initialData = {}, setEditingCategory }) => {
     return (
-        <div className="form-container">
+        <div className="max-w-lg mx-auto my-10 p-5 border border-gray-200 rounded shadow">
             <Formik
                 initialValues={{ name: initialData.name || '' }}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -17,13 +17,13 @@ const CategoryForm = ({ onSubmit, initialData = {}, setEditingCategory }) => {
                 enableReinitialize
             >
                 {({ isSubmitting, resetForm }) => (
-                    <Form>
+                    <Form className="space-y-4">
                         <div className="form-field">
-                            <Field name="name" placeholder="Category Name" required />
+                            <Field name="name" placeholder="Nazwa kategorii" required className="form-input mt-1 block w-full border py-2 px-3 shadow rounded" />
                         </div>
-                        <div className="form-field">
-                            <button type="submit" disabled={isSubmitting} className="edit">
-                                {initialData._id ? 'Update' : 'Add'}
+                        <div className="flex items-center space-x-4">
+                            <button type="submit" disabled={isSubmitting} className="bg-blue-500 text-white font-bold uppercase text-sm px-6 py-2 rounded shadow hover:bg-blue-600 transition ease-in-out duration-300">
+                                {initialData._id ? 'Zaktualizuj' : 'Dodaj'}
                             </button>
                             {initialData._id && (
                                 <button
@@ -32,9 +32,9 @@ const CategoryForm = ({ onSubmit, initialData = {}, setEditingCategory }) => {
                                         setEditingCategory(null);
                                         resetForm();
                                     }}
-                                    className="admin-button delete"
+                                    className="bg-red-500 text-white font-bold uppercase text-sm px-6 py-2 rounded shadow hover:bg-red-600 transition ease-in-out duration-300"
                                 >
-                                    Cancel
+                                    Anuluj
                                 </button>
                             )}
                         </div>
@@ -43,6 +43,7 @@ const CategoryForm = ({ onSubmit, initialData = {}, setEditingCategory }) => {
             </Formik>
         </div>
     );
+
 };
 
 export default CategoryForm;

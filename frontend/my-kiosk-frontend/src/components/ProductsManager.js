@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import ProductForm from './ProductForm';
+import { useCategoryChange } from '../context/CategoryChangeContext';
+import { AdminContext } from '../context/AdminContext';
 
 const ProductsManager = () => {
     const [products, setProducts] = useState([]);
@@ -8,12 +10,14 @@ const ProductsManager = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const API_BASE_URL = 'http://localhost:3001';
+    const { triggerCategoryChange } = useCategoryChange();
+    const { state } = useContext(AdminContext);
+    const adminKey = state.adminKey;
 
     useEffect(() => {
         fetchProducts();
         fetchCategories();
-
-    }, []);
+    }, [triggerCategoryChange]);
 
     const fetchProducts = async () => {
         try {
@@ -54,7 +58,7 @@ const ProductsManager = () => {
                 method: method,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Admin-Secret-Key': 'admin', // Replace with actual admin key
+                    'Admin-Secret-Key': adminKey,
                 },
                 body: JSON.stringify(product),
             });
@@ -78,12 +82,12 @@ const ProductsManager = () => {
 
 
     const deleteProduct = async (id) => {
-        if (window.confirm('Are you sure you want to delete this product?')) {
+        if (window.confirm('Czy na pewno chcesz usunąć ten produkt??')) {
             try {
                 const response = await fetch(`${API_BASE_URL}/api/admin/products/${id}`, {
                     method: 'DELETE',
                     headers: {
-                        'Admin-Secret-Key': 'admin', // Replace with actual admin key
+                        'Admin-Secret-Key': adminKey,
                     },
                 });
 
@@ -102,37 +106,43 @@ const ProductsManager = () => {
     };
 
 
+
     return (
-        <div className="admin-container">
-            <h2 className="admin-title">Zarządzaj produktami</h2>
-            <ProductForm onSubmit={addOrUpdateProduct} initialData={editingProduct || {}} categories={categories} />
+        <div className="admin-container p-5">
+            <h2 className="admin-title text-2xl font-semibold mb-4">Zarządzaj Produktami</h2>
+            <ProductForm
+                onSubmit={addOrUpdateProduct}
+                initialData={editingProduct || {}}
+                categories={categories}
+                setEditingProduct={setEditingProduct}
+            />
             {loading && <p>Loading products...</p>}
-            {error && <p className="error-message">{error}</p>}
-            <ul className="admin-list">
+            {error && <p className="error-message text-red-500">{error}</p>}
+            <ul className="admin-list mt-4">
                 {products.map((product) => (
-                    <li key={product._id} className="product-item">
-                        <div className="product-details">
-                            <h3>Nazwa: {product.name}</h3>
-                            <p>Cena: {product.price}</p>
-                            <p>Kategoria: {product.category}</p>
-                            <p>Image URL: {product.image || 'N/A'}</p>
-                            <text>Składniki:</text>
-                            <ul className="ingredients-list">
+                    <li key={product._id} className="product-item bg-white p-4 rounded shadow mb-4">
+                        <div className="product-details mb-3">
+                            <h3 className="text-lg font-semibold">Nazwa: {product.name}</h3>
+                            <p className="text-sm">Cena: {product.price} zł</p>
+                            <p className="text-sm">Kategoria: {product.category}</p>
+                            <p className="text-sm">Image URL: {product.image || 'N/A'}</p>
+                            <p className="text-sm font-semibold">Składniki:</p>
+                            <ul className="ingredients-list list-disc list-inside">
                                 {product.ingredients.map((ingredient, index) => (
-                                    <li key={index}>{ingredient}</li>
+                                    <li key={index} className="text-sm">{ingredient}</li>
                                 ))}
                             </ul>
                         </div>
-                        <div>
-                            <button className="edit" onClick={() => setEditingProduct(product)}>Edit</button>
-                            <button className="delete" onClick={() => deleteProduct(product._id)}>Delete</button>
+                        <div className="flex justify-between">
+                            <button className="edit bg-yellow-500 text-white font-bold uppercase text-sm px-3 py-1 rounded shadow hover:bg-yellow-600 transition ease-in-out duration-300" onClick={() => setEditingProduct(product)}>Edytuj</button>
+                            <button className="delete bg-red-500 text-white font-bold uppercase text-sm px-3 py-1 rounded shadow hover:bg-red-600 transition ease-in-out duration-300" onClick={() => deleteProduct(product._id)}>Usuń</button>
                         </div>
                     </li>
                 ))}
             </ul>
         </div>
-
     );
+
 
 };
 

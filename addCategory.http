@@ -4,22 +4,22 @@ Content-Type: application/json
 Admin-Secret-Key: admin
 
 {
-  "name": " "
+  "name": "example"
 }
 
 ###
 
 # Edit the category (Replace CATEGORY_ID with the actual ID of the created category)
-PUT http://localhost:3001/api/admin/categories/65abbc17d8aa4e4de55fe331
+PUT http://localhost:3001/api/admin/categories/65ad860598faf8fcc32dbdcc
 Content-Type: application/json
 Admin-Secret-Key: admin
 
 {
-  "name": "   "
+  "name": "example2"
 }
 
 ###
 
 # Delete the category (Replace CATEGORY_ID with the actual ID of the created category)
-DELETE http://localhost:3001/api/admin/categories/65abbc17d8aa4e4de55fe331
+DELETE http://localhost:3001/api/admin/categories/65ad860598faf8fcc32dbdcc
 Admin-Secret-Key: admin

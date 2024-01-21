@@ -92,7 +92,6 @@ app.post('/api/orders', async (req, res) => {
 
 app.post('/api/admin/login', (req, res) => {
     const adminKey = req.header('Admin-Secret-Key');
-    console.log('Received Admin Key:', adminKey); // Debugging line
 
     if (adminKey === process.env.ADMIN_SECRET_KEY) {
         res.json({ message: "Admin authenticated successfully" });

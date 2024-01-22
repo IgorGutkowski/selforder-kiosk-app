@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Product = require('./Product');
 
 const orderSchema = new mongoose.Schema({
     number: {
@@ -13,7 +14,14 @@ const orderSchema = new mongoose.Schema({
         product: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product',
-            required: [true, 'Product reference is required']
+            required: [true, 'Product reference is required'],
+            validate: {
+                validator: async function(productId) {
+                    const product = await Product.findById(productId);
+                    return !!product; // Returns true if product exists, otherwise false
+                },
+                message: 'Product not found in the database'
+            }
         }
     }],
     remarks: {
@@ -27,9 +35,10 @@ const orderSchema = new mongoose.Schema({
     },
     takeAway: {
         type: Boolean,
+        required: [true, 'TakeAway option is required'],
         default: false
-    }
-});
+
+    }});
 
 const Order = mongoose.model('Order', orderSchema);
 

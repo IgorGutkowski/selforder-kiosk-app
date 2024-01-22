@@ -20,13 +20,20 @@ const PaymentScreen = () => {
         setIsLoading(true);
         try {
             await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate payment delay
-            const response = await axios.post('http://localhost:3001/api/orders', order);
+
+            const response = await axios.post('http://localhost:3001/api/orders', order, {
+                headers: {
+                    'Paid-Secret-Key': 'order_paid'
+                }
+            });
+
             navigate('/order-confirmation', { state: { orderNumber: response.data.number } });
         } catch (error) {
             setError('Wystąpił problem ze składaniem zamówienia. Spróbuj ponownie lub skontaktuj się z obsługą.');
             setIsLoading(false);
         }
     };
+
 
     const handleCancelOrder = () => {
         navigate('/'); // Navigate to WelcomeScreen, simulating the cancellation of the order

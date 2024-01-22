@@ -1,0 +1,21 @@
+POST http://localhost:3001/api/orders
+Content-Type: application/json
+Paid-Secret-Key: order_paid
+
+{
+  "number": "123456789",
+  "date": "2024-01-21T12:00:00.000Z",
+  "products": [
+    {
+      "_id": "65abfe90a6c9625e1c3949d9"
+    },
+    {
+      "_id": "65abfe90a6c9625e1c3949da"
+    }
+  ],
+  "remarks": "Extra spicy, please",
+  "price": 25.99
+}
+
+
+###db.orders.deleteOne({ "_id" : ObjectId("id_number") });

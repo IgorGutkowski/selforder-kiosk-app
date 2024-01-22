@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 const Product = require('./models/Product');
 const Category = require('./models/Category');
 const Order = require('./models/Order');
-const adminAuth = require('./middleware/adminAuth'); // Make sure to create this middleware
+const adminAuth = require('./middleware/adminAuth');
+const paidAuth = require('./middleware/paidAuth');
 const app = express();
 
 app.use(express.json());
@@ -69,7 +70,7 @@ app.get('/api/products/search/:searchQuery', async (req, res) => {
     }
 });
 
-app.post('/api/orders', async (req, res) => {
+app.post('/api/orders', paidAuth, async (req, res) => {
     try {
         const newOrder = new Order({
             number: req.body.number,

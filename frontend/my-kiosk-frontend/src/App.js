@@ -13,7 +13,6 @@ import Statistics from './components/Statistics';
 import './App.css';
 
 const App = () => {
-    // App.jsx
     return (
         <AdminProvider>
             <Router>

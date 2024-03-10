@@ -45,7 +45,7 @@ const CategoriesManager = () => {
 
             if (response.ok) {
                 fetchCategories();
-                setEditingCategory(null); // Clear editing state
+                setEditingCategory(null);
                 triggerCategoryChange();
 
             } else {

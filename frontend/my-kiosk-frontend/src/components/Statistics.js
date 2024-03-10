@@ -32,7 +32,6 @@ const Statistics = () => {
         setLoading(true);
         setError('');
 
-        // Ensure dates start at 00:00:00 and end at 23:59:59
         const formattedStartDate = new Date(startDate).setHours(0, 0, 0, 0);
         const formattedEndDate = new Date(endDate).setHours(23, 59, 59, 999);
 

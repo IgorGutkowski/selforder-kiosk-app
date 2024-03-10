@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema({
         min: [0, 'Product price must be a positive number']
     },
     category: {
-        type: String, // Change the type to String
+        type: String,
         required: [true, 'Product category is required'],
         validate: {
             validator: async function(categoryName) {
@@ -34,13 +34,13 @@ const productSchema = new mongoose.Schema({
         validate: [
             {
                 validator: function(v) {
-                    return v.length <= 30; // Array must not have more than 30 elements
+                    return v.length <= 30;
                 },
                 message: 'Ingredients array can have a maximum of 30 elements'
             },
             {
                 validator: function(v) {
-                    return v.every(ingredient => ingredient.length <= 50); // Each string must be <= 50 characters
+                    return v.every(ingredient => ingredient.length <= 50);
                 },
                 message: 'Each ingredient can have a maximum length of 50 characters'
             }

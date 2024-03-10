@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { AdminContext } from '../context/AdminContext';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const AdminLogin = () => {
     const { dispatch } = useContext(AdminContext);
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
 
     const handleAdminLogin = async (values, { setSubmitting }) => {
         try {
@@ -24,7 +24,7 @@ const AdminLogin = () => {
                     payload: adminData,
                     adminKey: values.adminKey
                 });
-                navigate('/admin-panel'); // Redirect to the admin panel on successful login
+                navigate('/admin-panel');
             } else {
                 alert('Invalid Admin Key');
             }

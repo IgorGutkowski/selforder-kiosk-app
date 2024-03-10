@@ -6,7 +6,6 @@ const Order = ({ order, setOrder, removeFromOrder }) => {
     const navigate = useNavigate();
 
     const calculateTotalPrice = () => {
-        // Include paper bag fee if it's a takeaway order
         return order.products.reduce((total, product) => total + product.price, order.takeAway ? 1 : 0);
     };
 

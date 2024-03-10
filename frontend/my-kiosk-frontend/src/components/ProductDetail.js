@@ -3,7 +3,6 @@ import React from 'react';
 const ProductDetail = ({ product, addToOrder }) => {
     if (!product) return null;
 
-    // ProductDetails.jsx
     return (
         <div className="bg-white m-2 p-5 border border-gray-200 rounded shadow">
             <h2 className="text-xl font-bold mb-4">{product.name}</h2>

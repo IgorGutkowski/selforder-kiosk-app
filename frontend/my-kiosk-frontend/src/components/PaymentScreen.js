@@ -1,4 +1,3 @@
-// PaymentScreen.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -36,11 +35,10 @@ const PaymentScreen = () => {
 
 
     const handleCancelOrder = () => {
-        navigate('/'); // Navigate to WelcomeScreen, simulating the cancellation of the order
+        navigate('/');
     };
 
-    // PaymentContainer.jsx
-    // PaymentContainer.jsx
+
     return (
         <div className="flex flex-col items-center justify-center  py-8 px-4">
             <h1 className="text-3xl font-bold mb-4">Payment</h1>

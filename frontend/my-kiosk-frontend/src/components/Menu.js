@@ -16,12 +16,12 @@ const Menu = () => {
     const [errorProducts, setErrorProducts] = useState(null);
     const [errorCategories, setErrorCategories] = useState(null);
     const [order, setOrder] = useState({
-        number: Date.now().toString(), // Convert timestamp to string for the order number
+        number: Date.now().toString(),
         date: new Date(),
         products: [],
         remarks: '',
         price: 0,
-        takeAway: false // Default to false
+        takeAway: false
     });
     const navigate = useNavigate();
     const location = useLocation();

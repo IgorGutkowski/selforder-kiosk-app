@@ -1,4 +1,3 @@
-// CategoryForm.js
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 

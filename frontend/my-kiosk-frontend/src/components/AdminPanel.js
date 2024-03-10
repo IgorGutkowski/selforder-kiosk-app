@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import { AdminContext } from '../context/AdminContext';
 import CategoriesManager from './CategoriesManager';
 import ProductsManager from "./ProductsManager";

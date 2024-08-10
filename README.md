@@ -9,7 +9,33 @@ Welcome to the Self-Order Kiosk Application! This project aims to provide a digi
 - MongoDB
 - Tailwind CSS
 
-## Getting Started
+
+## Database Setup
+
+To set up the MongoDB database using the provided dump:
+
+1. **Decompress the Database Dump:**
+   First, decompress the `kioskDB.tar.gz` file which contains the BSON files for MongoDB. Run the following command in the root of the project directory:
+```
+tar -xzvf data/kioskDB.tar.gz -C data/
+```
+
+2. **Restore the Database:**
+Use `mongorestore` to restore the database from the dump. Ensure that MongoDB is running and then execute:
+
+```
+mongorestore --db kioskDB data/kioskDB
+```
+
+This will restore the `kioskDB` database with all the necessary collections and documents.
+
+3. **Verify the Restoration:**
+After restoring the database, verify that the data has been properly loaded by connecting to MongoDB with a GUI tool like MongoDB Compass or using the MongoDB CLI.
+
+Ensure that the `MONGODB_URI` environment variable is set to the correct URI that points to the restored database.
+
+
+## GETTING STARTED
 
 To launch the application, follow these steps:
 
@@ -40,7 +66,7 @@ To launch the application, follow these steps:
    cd my-kiosk-frontend
    npm install
    ```
-   
+
 
    Additionally, you may need to install the Axios package:
 
@@ -50,7 +76,7 @@ To launch the application, follow these steps:
 
 5. **Set Environmental Variables:**
    Ensure you have assigned the required environmental variables for the application to function correctly:
-   
+
    - `ADMIN_SECRET_KEY`: The secret key required for administrative access.
    - `PAID`: The secret key used for payment processing.
    - `MONGODB_URI`: The URI to connect to your MongoDB database.
